@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Models.Models.Departamento>
+
+@{
+    ViewBag.Title = "Gestión de Departamentos";
+    Layout = "~/Views/Shared/_Layout0.cshtml";
+}
+
+<h2>Gestión de Departamentos</h2>
+
+<p>
+    <input type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#Departamentos" onclick="Crear()" value="Crear Nuevo Departamento">
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Encargado.FullUserName)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Encargado.Nombres)
+        </td>
+        <td>
+            <a href="#" type="button" class="btn btn-info btn-sm " data-toggle="modal" data-target="#Departamentos" onclick="Editar()">
+                <span class="glyphicon glyphicon-pencil"></span> Editar
+            </a>
+            @Html.HiddenFor(modelItem => item.Id)
+        </td>
+        <td>
+            <a href="#" type="button" class="btn btn-info btn-sm " data-toggle="modal" data-target="#Departamentos" onclick="Detalles()">
+                <span class="glyphicon glyphicon-eye-open"></span> Detalles
+            </a>
+
+        </td>
+    </tr>
+}
+
+</table>
+@Html.BoostStrapModal("Departamentos", customTarget: "DepartamentoModalContent", useLargeModal: true)
+<script type="text/javascript">
+
+
+    function Crear() {
+        $("#DepartamentoModalContent").html('');
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Create", "Departamentos")',
+            success: function (view) {
+                $("#DepartamentoModalContent").html(view);
+            },
+
+        });
+    }
+    function Editar() {
+        $("#DepartamentoModalContent").html('');
+        var Id = $("#item_Id").val();
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Edit", "Departamentos")' + "/" + Id,
+            //data: Id,
+            success: function (view) {
+                $("#DepartamentoModalContent").html(view);
+            },
+
+        });
+    }
+    function Detalles() {
+        $("#DepartamentoModalContent").html('');
+        var Id = $("#item_Id").val();
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Details", "Departamentos")' + "/" + Id,
+            //data: Id,
+            success: function (view) {
+            $("#DepartamentoModalContent").html(view);
+            },
+
+        });
+    }
+</script>

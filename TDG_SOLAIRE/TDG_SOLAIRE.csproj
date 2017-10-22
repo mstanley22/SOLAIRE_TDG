@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,12 +53,21 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -188,12 +198,23 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AreasController.cs" />
+    <Compile Include="Controllers\DepartamentosController.cs" />
+    <Compile Include="Controllers\EmpleadosController.cs" />
+    <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InsumoesController.cs" />
+    <Compile Include="Controllers\InsumosController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PeriodosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CollectionExtensions.cs" />
+    <Compile Include="Helpers\HMTLHelperExtensions.cs" />
+    <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -203,6 +224,8 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\edit.svg" />
+    <Content Include="Content\Logotipo.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -221,7 +244,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -255,6 +280,43 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_Layout0.cshtml" />
+    <Content Include="Views\Empleados\Partials\Create.cshtml" />
+    <Content Include="Views\Empleados\Partials\Delete.cshtml" />
+    <Content Include="Views\Empleados\Partials\Details.cshtml" />
+    <Content Include="Views\Empleados\Partials\Edit.cshtml" />
+    <Content Include="Views\Empleados\Index.cshtml" />
+    <Content Include="Views\Departamentos\Partials\Create.cshtml" />
+    <Content Include="Views\Departamentos\Partials\Delete.cshtml" />
+    <Content Include="Views\Departamentos\Partials\Details.cshtml" />
+    <Content Include="Views\Departamentos\Partials\Edit.cshtml" />
+    <Content Include="Views\Departamentos\Index.cshtml" />
+    <Content Include="Views\Empresas\Partials\Create.cshtml" />
+    <Content Include="Views\Empresas\Partials\Delete.cshtml" />
+    <Content Include="Views\Empresas\Partials\Details.cshtml" />
+    <Content Include="Views\Empresas\Partials\Edit.cshtml" />
+    <Content Include="Views\Empresas\Index.cshtml" />
+    <Content Include="Views\Areas\Partials\Create.cshtml" />
+    <Content Include="Views\Areas\Partials\Delete.cshtml" />
+    <Content Include="Views\Areas\Partials\Details.cshtml" />
+    <Content Include="Views\Areas\Partials\Edit.cshtml" />
+    <Content Include="Views\Areas\Index.cshtml" />
+    <Content Include="Views\Shared\GeneralModal.cshtml" />
+    <Content Include="Views\Periodos\Partials\Create.cshtml" />
+    <Content Include="Views\Periodos\Partials\Delete.cshtml" />
+    <Content Include="Views\Periodos\Partials\Details.cshtml" />
+    <Content Include="Views\Periodos\Partials\Edit.cshtml" />
+    <Content Include="Views\Periodos\Index.cshtml" />
+    <Content Include="Views\Insumos\Create.cshtml" />
+    <Content Include="Views\Insumos\Delete.cshtml" />
+    <Content Include="Views\Insumos\Details.cshtml" />
+    <Content Include="Views\Insumos\Edit.cshtml" />
+    <Content Include="Views\Insumos\Index.cshtml" />
+    <Content Include="Views\Insumoes\Partials\Create.cshtml" />
+    <Content Include="Views\Insumoes\Partials\Delete.cshtml" />
+    <Content Include="Views\Insumoes\Partials\Details.cshtml" />
+    <Content Include="Views\Insumoes\Partials\Edit.cshtml" />
+    <Content Include="Views\Insumoes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -273,6 +335,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BussinesAccess\BussinesAccess.csproj">
+      <Project>{1f673811-229e-40e4-b827-818a393cdf70}</Project>
+      <Name>BussinesAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Context\Context.csproj">
+      <Project>{351ddc6d-3014-42aa-b442-6594e9ae0f1f}</Project>
+      <Name>Context</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{4db641a4-7a4c-420c-833f-fb18df6bb300}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

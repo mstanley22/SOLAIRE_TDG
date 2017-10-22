@@ -15,14 +15,14 @@ namespace TDG_SOLAIRE.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Solaire.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Informacion de Contacto.";
 
             return View();
         }

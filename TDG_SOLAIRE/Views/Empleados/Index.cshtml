@@ -1,0 +1,138 @@
+﻿@model IEnumerable<Models.Models.Empleado>
+
+@{
+    ViewBag.Title = "Getión de Empleados";
+    Layout = "~/Views/Shared/_Layout0.cshtml";
+}
+
+<h2>Gestión de Empleados</h2>
+
+<p>
+    <input type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#Empleados" onclick="Crear()" value="Crear Nuevo Empleado">
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellidos)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dui)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TelefonoPrincipal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TelefonoSecundario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Especialidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AreaExperiencia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sexo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Salario)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apellidos)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dui)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TelefonoPrincipal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TelefonoSecundario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Especialidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AreaExperiencia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sexo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Direccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Salario)
+        </td>
+        <td>
+            <a href="#" type="button" class="btn btn-info btn-sm " data-toggle="modal" data-target="#Empleados" onclick="Editar()">
+                <span class="glyphicon glyphicon-pencil"></span> Editar
+            </a>
+            @Html.HiddenFor(modelItem => item.Id)
+        </td>
+        <td>
+            <a href="#" type="button" class="btn btn-info btn-sm " data-toggle="modal" data-target="#Empleados" onclick="Detalles()">
+                <span class="glyphicon glyphicon-eye-open"></span> Detalles
+            </a>
+
+        </td>
+    </tr>
+}
+
+</table>
+@Html.BoostStrapModal("Empleados", customTarget: "EmpleadoModalContent", useLargeModal: true)
+<script type="text/javascript">
+
+
+    function Crear() {
+        $("#EmpleadoModalContent").html('');
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Create", "Empleados")',
+            success: function (view) {
+                $("#EmpleadoModalContent").html(view);
+            },
+
+        });
+    }
+    function Editar() {
+        $("#EmpleadoModalContent").html('');
+        var Id = $("#item_Id").val();
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Edit", "Empleados")' + "/" + Id,
+            //data: Id,
+            success: function (view) {
+                $("#EmpleadoModalContent").html(view);
+            },
+
+        });
+    }
+    function Detalles() {
+        $("#EmpleadoModalContent").html('');
+        var Id = $("#item_Id").val();
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Details", "Empleados")' + "/" + Id,
+            //data: Id,
+            success: function (view) {
+                $("#EmpleadoModalContent").html(view);
+            },
+
+        });
+    }
+</script>

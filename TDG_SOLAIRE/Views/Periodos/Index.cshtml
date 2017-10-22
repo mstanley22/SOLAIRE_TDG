@@ -1,0 +1,103 @@
+﻿@model IEnumerable<Models.Models.Periodo>
+
+@{
+    ViewBag.Title = "Periodo";
+    Layout = "~/Views/Shared/_Layout0.cshtml";
+}
+
+<h2>Periodo</h2>
+
+<p>
+    <input type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#Periodo" onclick="Crear()" value="Crear Nuevo Periodo">
+</p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaInicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaFin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastUpdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedBy)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaFin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedBy)
+            </td>
+            <td>
+                <a href="#" type="button" class="btn btn-info btn-sm " data-toggle="modal" data-target="#Periodo" onclick="Editar()">
+                    <span class="glyphicon glyphicon-pencil"></span> Editar
+                </a>
+                @Html.HiddenFor(modelItem => item.Id)
+            </td>
+            <td>
+                <a href="#" type="button" class="btn btn-info btn-sm " data-toggle="modal" data-target="#Periodo" onclick="Detalles()">
+                    <span class="glyphicon glyphicon-eye-open"></span> Detalles
+                </a>
+
+            </td>
+        </tr>
+    }
+    
+    </table>
+
+@Html.BoostStrapModal("Periodo", customTarget: "PeriodosModalContent", useLargeModal: true)
+<script type="text/javascript">
+
+
+    function Crear() {
+        $("#PeriodosModalContent").html('');
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Create", "Periodos")',
+            success: function (view) {
+                $("#PeriodosModalContent").html(view);
+            },
+
+        });
+    }
+    function Editar() {
+        $("#PeriodosModalContent").html('');
+        var Id = $("#item_Id").val();
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Edit", "Periodos")' + "/" + Id,
+            //data: Id,
+            success: function (view) {
+                $("#PeriodosModalContent").html(view);
+            },
+
+        });
+    }
+    function Detalles() {
+        $("#PeriodosModalContent").html('');
+        var Id = $("#item_Id").val();
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Details", "Periodos")' + "/" + Id,
+            //data: Id,
+            success: function (view) {
+                $("#PeriodosModalContent").html(view);
+            },
+
+        });
+    }
+</script>

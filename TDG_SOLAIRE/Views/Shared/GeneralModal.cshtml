@@ -1,0 +1,66 @@
+﻿@{
+
+    Layout = null;
+
+    var targetId = !string.IsNullOrEmpty(Model.CustomtargetId) ?
+                   Model.CustomtargetId :
+                   Guid.NewGuid().ToString();
+
+
+}
+@model Models.ModalViewModel
+
+@if (Model.LargeModal)
+{
+
+    <div class="modal fade-modal-lg" id="@Model.ModalName" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">         
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">@Model.ModalName</h4>
+                </div>
+                <div class="modal-body" id="@targetId">
+                    <div class="sk-spinner sk-spinner-three-bounce"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+               
+
+            </div>
+        </div>
+    </div>
+}
+else
+{
+
+    <div class="modal fade" id="@Model.ModalName" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id="@targetId">
+
+                <div class="sk-spinner sk-spinner-three-bounce"></div>
+
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    function LoadToModal(url) {
+        $("#@targetId").html('');
+        $("#loaderSection").fadeIn();
+        $.ajax({
+            type: "POST",
+            url: url,
+            success: function (view) {
+                $("#@targetId").html(view);
+                $("#loaderSection").fadeOut();
+            },
+
+        });
+    }
+
+</script>
